@@ -22,7 +22,7 @@ class AppTheme {
             'Selected color must be lees or equal than ${colorList.length - 1}');
 
   ThemeData getTheme() => ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: colorList[selectColor],
-      );
+      useMaterial3: true,
+      colorSchemeSeed: colorList[selectColor],
+      appBarTheme: const AppBarTheme(centerTitle: false));
 }
