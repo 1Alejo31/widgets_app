@@ -13,9 +13,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme(selectColor: 4).getTheme(),
-      home: const Scaffold(
+      home: Scaffold(
         body: Center(
-          child: Text("Hello word"),
+          child: FilledButton(
+            child: const Text('Hola'),
+            onPressed: () {},
+          ),
         ),
       ),
     );
