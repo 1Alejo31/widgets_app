@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgets_app/config/presentation/screens/home/home_screen.dart';
 import 'package:widgets_app/config/theme/app_theme.dart';
 
 void main() {
@@ -11,16 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme(selectColor: 4).getTheme(),
-      home: Scaffold(
-        body: Center(
-          child: FilledButton(
-            child: const Text('Hola'),
-            onPressed: () {},
-          ),
-        ),
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme(selectColor: 4).getTheme(),
+        home: const HomeScreen());
   }
 }
