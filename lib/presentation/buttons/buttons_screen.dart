@@ -75,7 +75,7 @@ class _ButtonsView extends StatelessWidget {
               icon: const Icon(Icons.account_box_outlined),
               label: const Text('Text Icon'),
             ),
-            //Custom buttom
+            const CustomButton(),
             IconButton(
               onPressed: () {},
               icon: const Icon(Icons.app_registration_rounded),
@@ -89,6 +89,33 @@ class _ButtonsView extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  const CustomButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    //ClipRRect permite agregar los bordes redondeados
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Material(
+        color: colors.primary,
+        //InkWell Es basicamente como un gestor detector pero reacciona al splash screen
+        child: InkWell(
+          onTap: () {},
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              'Boton Personalizado',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         ),
       ),
     );
