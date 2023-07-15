@@ -54,7 +54,7 @@ class _ButtonsView extends StatelessWidget {
             FilledButton(onPressed: () {}, child: const Text('Filled')),
             FilledButton.icon(
               onPressed: () {},
-              icon: Icon(Icons.accessibility),
+              icon: const Icon(Icons.accessibility),
               label: const Text('Fille Icons'),
             ),
             OutlinedButton(
