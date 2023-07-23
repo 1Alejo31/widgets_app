@@ -1,12 +1,126 @@
-import 'package:flutter/material.dart';
+import 'dart:ffi';
 
-class InifinitiScrollScreen extends StatelessWidget {
+import 'package:animate_do/animate_do.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+class InifinitiScrollScreen extends StatefulWidget {
   static const name = 'infinite_scroll_screen';
 
   const InifinitiScrollScreen({super.key});
 
   @override
+  State<InifinitiScrollScreen> createState() => _InifinitiScrollScreenState();
+}
+
+class _InifinitiScrollScreenState extends State<InifinitiScrollScreen> {
+  List<int> imagesIds = [1, 2, 3, 4, 5];
+
+  final ScrollController scrollController = ScrollController();
+
+  bool isLoading = false;
+  bool isMounted = true;
+
+  void addFiveImages() {
+    //obteniendo el ultimo valor de imagesIds
+    final lastId = imagesIds.last;
+    imagesIds.addAll([1, 2, 3, 4, 5].map((e) => lastId + e));
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      //valida si se encuentra en la ultima posicion de las imagenes para poder cargar mas
+      if ((scrollController.position.pixels + 500) >=
+          scrollController.position.maxScrollExtent) {
+        //load net page
+        loadNextPage();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  Future loadNextPage() async {
+    if (isLoading) return;
+    isLoading = true;
+    setState(() {});
+
+    await Future.delayed(const Duration(seconds: 2));
+    addFiveImages();
+    isLoading = false;
+    if (!isMounted) return;
+    setState(() {});
+    moveScrollToBottom();
+  }
+
+  Future<void> onRefresh() async {
+    isLoading = true;
+    setState(() {});
+    await Future.delayed(const Duration(seconds: 3));
+    if (!isMounted) return;
+    final lastId = imagesIds.last;
+    isLoading = false;
+    imagesIds.clear();
+    imagesIds.add(lastId + 1);
+    addFiveImages();
+    setState(() {});
+  }
+
+  void moveScrollToBottom() {
+    if (scrollController.position.pixels + 150 <=
+        scrollController.position.maxScrollExtent) return;
+
+    scrollController.animateTo(scrollController.position.pixels + 120,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        removeBottom: true,
+        child: RefreshIndicator(
+          onRefresh: onRefresh,
+          edgeOffset: 10,
+          strokeWidth: 2,
+          child: ListView.builder(
+            controller: scrollController,
+            itemCount: imagesIds.length,
+            itemBuilder: (context, index) {
+              return FadeInImage(
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 300,
+                placeholder: const AssetImage('assets/images/jar-loading.gif'),
+                image: NetworkImage(
+                    'https://picsum.photos/id/${imagesIds[index]}/500/300'),
+              );
+            },
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.pop(),
+        child: FadeIn(
+          child: isLoading
+              ? SpinPerfect(
+                  infinite: true,
+                  child: const Icon(Icons.refresh_rounded),
+                )
+              : const Icon(Icons.arrow_back_ios_outlined),
+        ),
+      ),
+    );
   }
 }
