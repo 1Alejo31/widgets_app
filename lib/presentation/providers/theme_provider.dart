@@ -18,4 +18,12 @@ final themeNotifierProvider = StateNotifierProvider<ThemeNotifier, AppTheme>(
 class ThemeNotifier extends StateNotifier<AppTheme> {
   //super(AppTheme()) Se le indica que cree la primera instancia de AppTheme
   ThemeNotifier() : super(AppTheme());
+
+  void toogleDarkmode() {
+    state = state.copyWhith(isDarkmode: !state.isDarkmode);
+  }
+
+  void changeColorIndex(int colorIndex) {
+    state = state.copyWhith(selectedColor: colorIndex);
+  }
 }
