@@ -63,4 +63,10 @@ const appMenuItems = <MenuItem>[
     link: '/infinite',
     icon: Icons.list_alt_rounded,
   ),
+  MenuItem(
+    title: 'Contador de números',
+    subTitle: 'Screen de contando numeros',
+    link: '/counter_screen',
+    icon: Icons.add,
+  ),
 ];
