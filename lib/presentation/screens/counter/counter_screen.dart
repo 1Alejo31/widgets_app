@@ -20,8 +20,8 @@ class CounterScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: stateDarkmode
-                ? const Icon(Icons.light_mode_outlined)
-                : const Icon(Icons.dark_mode_outlined),
+                ? const Icon(Icons.dark_mode_outlined)
+                : const Icon(Icons.light_mode_outlined),
             onPressed: () {
               //Toma el puesto y lo actuliza, si esta en true lo pasa a false y viseversa
               ref
